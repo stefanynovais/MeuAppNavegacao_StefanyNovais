@@ -9,7 +9,11 @@ O projeto tem como objetivo implementar os conceitos de navegação de tela e ar
    npm view react version 
   ```
 
- Verifique se o ReactJS está está instalado
+2️⃣ Configure seu usuário do GitHub
  ```bash
-   npm view react version 
+   git config -- user.name "nome_de_usuário"
+  ```
+
+ ```bash
+   git config -- user.name "seu_email"
   ```
