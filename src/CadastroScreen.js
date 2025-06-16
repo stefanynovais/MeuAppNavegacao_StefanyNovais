@@ -14,7 +14,7 @@ export default function CadastroScreen({ navigation }) {
             try {
                 await AsyncStorage.setItem('userLogin', login);
                 await AsyncStorage.setItem('userSenha', senha);
-                Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+                Alert.alert('Cadastro realizado com sucesso!');
                 navigation.navigate('Login');
             } catch (error) {
                 Alert.alert('Erro', 'Não foi possível salvar os dados.');
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         paddingLeft: 8,
-        paddingRight: 35, // espaço para o ícone
+        paddingRight: 35,
         borderRadius: 5,
         backgroundColor: 'rgba(247, 167, 243, 0.14)',
         borderColor: 'rgba(112, 39, 109, 0.5)',

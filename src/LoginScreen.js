@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
 
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
+    const [senhaFoco, setSenhaFoco] = useState('');
+    const [senhaVisivel, setSenhaVisivel] = useState(false);
+
 
     const handleLogin = async () => {
-        try{
+        try {
             const savedLogin = await AsyncStorage.getItem('userLogin');
             const savedSenha = await AsyncStorage.getItem('userSenha');
 
-        if (login === savedLogin && senha === savedSenha) {
-            navigation.replace('Home');
-        } else {
-            Alert.alert('Erro', 'Login ou senha incorretos!');
-        }
-    } catch (error) {
+            if (login === savedLogin && senha === savedSenha) {
+                navigation.replace('Home');
+            } else {
+                Alert.alert('Erro', 'Login ou senha incorretos!');
+            }
+        } catch (error) {
             Alert.alert('Erro', 'Falha ao acessar os dados de login!');
-    }
+        }
     };
     return (
 
         <View style={styles.container}>
-            <Image source={require('../assets/childhood.png')} style={styles.logo}/>
+            <Image source={require('../assets/childhood.png')} style={styles.logo} />
 
             <Text style={styles.welcome}>Bem-vindo ao App de Navegação</Text>
             <TextInput
@@ -34,21 +38,33 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={setLogin}
                 style={styles.input}
             />
-            <TextInput
-                placeholder="Senha"
-                placeholderTextColor={'rgba(58, 7, 56, 0.66)'}
-                value={senha}
-                onChangeText={setSenha}
-                secureTextEntry
-                style={styles.input}
-            />
-             <TouchableOpacity style={styles.estiloBotao} onPress={handleLogin}>
-                             <Text style={styles.textoBotao}>Entrar</Text>
-                         </TouchableOpacity>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    placeholder="Senha"
+                    value={senha}
+                    onChangeText={setSenha}
+                    secureTextEntry={!senhaVisivel}
+                    style={styles.inputComIcone}
+                    placeholderTextColor="rgba(58, 7, 56, 0.66)"
+                    onFocus={() => setSenhaFoco(true)} //o campo em foque significa que o usuário está com o input aberto
+                    onBlur={() => setSenhaFoco(false)} //o blur indica que o usuário saiu do campo 
+                />
+                {(senhaFoco || senha.length > 0) && ( // o length pega o número de caracteres que uma string tem. Sendo assim, se length for maior que 0, o usuário já digitou alguma caracter, logo já pode aparecer o olhinho.
+                    <TouchableOpacity
+                        style={styles.iconeOlho}
+                        onPress={() => setSenhaVisivel(!senhaVisivel)}
+                    >
+                        <Icon name={senhaVisivel ? "eye-off" : "eye"} size={20} color="#70376D" />
+                    </TouchableOpacity>
+                )}
+            </View>
+            <TouchableOpacity style={styles.estiloBotao} onPress={handleLogin}>
+                <Text style={styles.textoBotao}>Entrar</Text>
+            </TouchableOpacity>
 
-             <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={styles.link}>Não tem uma conta? Crie uma!</Text>
-      </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+                <Text style={styles.link}>Não tem uma conta? Crie uma!</Text>
+            </TouchableOpacity>
 
         </View>
 
@@ -70,7 +86,7 @@ const styles = StyleSheet.create({
         top: 40,
         left: 10,
         width: 90,
-        height:90,
+        height: 90,
         resizeMode: 'contain'
     },
     welcome: {
@@ -90,30 +106,50 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(247, 167, 243, 0.14)',
         borderColor: 'rgba(112, 39, 109, 0.5)'
     },
+    inputContainer: {
+        position: 'relative',
+        marginBottom: 20,
+    },
+    inputComIcone: {
+        height: 40,
+        borderWidth: 1,
+        padding: 8,
+        paddingLeft: 8,
+        paddingRight: 35,
+        borderRadius: 5,
+        backgroundColor: 'rgba(247, 167, 243, 0.14)',
+        borderColor: 'rgba(112, 39, 109, 0.5)',
+    },
+
+    iconeOlho: {
+        position: 'absolute',
+        right: 10,
+        top: 10,
+    },
     estiloBotao: {
-    backgroundColor: 'rgba(175, 79, 170, 0.7)',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 10,
-    borderRadius: 8,
-    borderWidth: 1,          
-    borderColor: 'rgba(58, 7, 56, 0.66)',    
-    borderStyle: 'solid'
+        backgroundColor: 'rgba(175, 79, 170, 0.7)',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 10,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: 'rgba(58, 7, 56, 0.66)',
+        borderStyle: 'solid'
     },
     textoBotao: {
-    color: 'rgba(58, 7, 56, 0.66)',
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Poppins-Regular'
+        color: 'rgba(58, 7, 56, 0.66)',
+        fontSize: 16,
+        fontWeight: 'bold',
+        fontFamily: 'Poppins-Regular'
     },
     Text: {
         color: 'rgba(0, 0, 0, 0.5)'
     },
     link: {
-    textAlign: 'center',
-    color: 'blue',
-    marginTop: 10,
-    textDecorationLine: 'underline',
-  },
+        textAlign: 'center',
+        color: 'blue',
+        marginTop: 10,
+        textDecorationLine: 'underline',
+    },
 });
