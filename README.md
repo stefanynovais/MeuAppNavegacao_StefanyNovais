@@ -22,3 +22,11 @@ O projeto tem como objetivo implementar os conceitos de navegação de tela e ar
 ```bash
    git clone https://github.com/stefanynovais/MeuAppNavegacao_StefanyNovais.git
   ```
+
+4️⃣Para executar no ExpoGo
+```bash
+   npm install expo
+  ```
+```bash
+   npx expo start --tunnel
+  ```
