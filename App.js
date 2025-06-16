@@ -19,8 +19,12 @@ export default function App() {
                     component={LoginScreen}
                     options={{ headerShown: false }}
                 />
-                <Stack.Screen name="Cadastro" component={CadastroScreen}></Stack.Screen>
-                <Stack.Screen name="Home" component={HomeScreen} options={{ headerBackVisible: false }}></Stack.Screen>
+                <Stack.Screen
+                    name="Cadastro"
+                    component={CadastroScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}></Stack.Screen>
                 <Stack.Screen name="Details" component={DetailsScreen}></Stack.Screen>
                 <Stack.Screen name="Profile" component={ProfileScreen}></Stack.Screen>
             </Stack.Navigator>
