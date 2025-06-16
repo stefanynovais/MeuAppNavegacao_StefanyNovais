@@ -18,7 +18,7 @@ O projeto tem como objetivo implementar os conceitos de navegação de tela e ar
    git config -- user.name "seu_email"
   ```
 
-3️⃣ Clone o Projeto
+3️⃣ Clone o Repositório
 ```bash
-   git clone 
+   git clone https://github.com/stefanynovais/MeuAppNavegacao_StefanyNovais.git
   ```
