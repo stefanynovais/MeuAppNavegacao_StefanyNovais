@@ -4,11 +4,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CadastroScreen({ navigation }) {
+
+    //estados atuais 
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
     const [senhaFoco, setSenhaFoco] = useState('');
     const [senhaVisivel, setSenhaVisivel] = useState(false);
 
+    //lógica: armazenar e verificar se os dados foram preenchidos
     const handleCadastro = async () => {
         if (login && senha) {
             try {
@@ -17,10 +20,10 @@ export default function CadastroScreen({ navigation }) {
                 Alert.alert('Cadastro realizado com sucesso!');
                 navigation.navigate('Login');
             } catch (error) {
-                Alert.alert('Erro', 'Não foi possível salvar os dados.');
+                Alert.alert('Erro', 'Não foi possível salvar os dados.'); //retorna o alert se houver algum erro ao salvar
             }
         } else {
-            Alert.alert('Erro', 'Preencha todos os campos da tela!');
+            Alert.alert('Erro', 'Preencha todos os campos da tela!'); //se o usuario não preencheu todos os campos, aparece essa mensagem
         }
     };
     return (
@@ -55,6 +58,7 @@ export default function CadastroScreen({ navigation }) {
                     </TouchableOpacity>
                 )}
             </View>
+            
             <TouchableOpacity style={styles.estiloBotao} onPress={handleCadastro}>
                 <Text style={styles.textoBotao}>Cadastrar</Text>
             </TouchableOpacity>

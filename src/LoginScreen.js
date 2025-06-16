@@ -5,24 +5,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
 
+    //estados atuais 
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
     const [senhaFoco, setSenhaFoco] = useState('');
     const [senhaVisivel, setSenhaVisivel] = useState(false);
 
-
+//função chamada ao clicar em "entrar"
     const handleLogin = async () => {
         try {
-            const savedLogin = await AsyncStorage.getItem('userLogin');
+            const savedLogin = await AsyncStorage.getItem('userLogin'); //o await diz como: "faça isso aqui antes de continuar"
+            
+            //os gets são para buscar o login e senhas salvos
             const savedSenha = await AsyncStorage.getItem('userSenha');
 
-            if (login === savedLogin && senha === savedSenha) {
+            if (login === savedLogin && senha === savedSenha) { //comparando ao que foi digitado pelo usuário, se estiver igual, redireciona à tela de homescreen
                 navigation.replace('Home');
             } else {
-                Alert.alert('Erro', 'Login ou senha incorretos!');
+                Alert.alert('Erro', 'Login ou senha incorretos!'); //se não estiver igual, retorna esse alert de erro
             }
         } catch (error) {
-            Alert.alert('Erro', 'Falha ao acessar os dados de login!');
+            Alert.alert('Erro', 'Falha ao acessar os dados de login!'); //alerta de falha ao tentar verificar os dados
         }
     };
     return (
@@ -52,16 +55,25 @@ export default function LoginScreen({ navigation }) {
                 {(senhaFoco || senha.length > 0) && ( // o length pega o número de caracteres que uma string tem. Sendo assim, se length for maior que 0, o usuário já digitou alguma caracter, logo já pode aparecer o olhinho.
                     <TouchableOpacity
                         style={styles.iconeOlho}
-                        onPress={() => setSenhaVisivel(!senhaVisivel)}
+                        onPress={() => setSenhaVisivel(!senhaVisivel)} //alterna a visibilidade da senha, como se fosse um boolean
                     >
-                        <Icon name={senhaVisivel ? "eye-off" : "eye"} size={20} color="#70376D" />
+                        <Icon name={senhaVisivel ? "eye-off" : "eye"} size={20} color="#70376D" /> {/*Aqui é como se fosse uma forma mais curta para se escrever um if/else. O ? testa uma condição e decide qual valor retornar. */}
                     </TouchableOpacity>
-                )}
+                )}                         
             </View>
+            
+                 {senhaFoco && (
+        <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}>
+          <Text style={styles.recuperarSenha}>Esqueceu a senha?</Text>
+        </TouchableOpacity>
+      )}
+
+            {/*Optei por usar esse touchable opacity porque ele é menos limitado que um "button", para ser utilizado*/}
             <TouchableOpacity style={styles.estiloBotao} onPress={handleLogin}>
                 <Text style={styles.textoBotao}>Entrar</Text>
             </TouchableOpacity>
 
+            {/*Link para ir até a tela de cadastro, caso o usuário não tenha um*/}
             <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
                 <Text style={styles.link}>Não tem uma conta? Crie uma!</Text>
             </TouchableOpacity>
@@ -152,4 +164,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textDecorationLine: 'underline',
     },
+    recuperarSenha: {
+    textAlign: 'right',
+    color: 'blue',
+    marginTop: 5,
+    marginBottom: 15,
+    marginRight: 5,
+    textDecorationLine: 'underline',
+    fontSize: 13,
+    fontStyle: 'italic',
+  },
 });
