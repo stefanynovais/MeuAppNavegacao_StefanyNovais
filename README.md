@@ -17,3 +17,8 @@ O projeto tem como objetivo implementar os conceitos de navegação de tela e ar
  ```bash
    git config -- user.name "seu_email"
   ```
+
+3️⃣ Clone o Projeto
+```bash
+   git clone 
+  ```
