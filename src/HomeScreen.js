@@ -1,4 +1,3 @@
-import { Poppins_100Thin_Italic } from '@expo-google-fonts/poppins';
 import React, { useState } from 'react';
 import { View, Text, TextInput, FlatList, Button, StyleSheet, Dimensions, Image, TouchableOpacity, ScrollView } from 'react-native';
 
@@ -22,33 +21,45 @@ export default function HomeScreen({ navigation }) {
         item.titulo.toLowerCase().includes(pesquisa.toLowerCase())
     );
     return (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={styles.container}>
-                <Image source={require('../assets/childhood.png')} style={styles.logo} />
-                <TextInput
-                    placeholder="Digite aqui..."
-                    placeholderTextColor="rgba(58, 7, 56, 0.66)"
-                    value={pesquisa}
-                    onChangeText={setPesquisa}
-                    style={styles.input}
+
+        <View style={styles.container}>
+            <Image source={require('../assets/childhood.png')} style={styles.logo} />
+            <TextInput
+                placeholder="Digite aqui..."
+                placeholderTextColor="rgba(58, 7, 56, 0.66)"
+                value={pesquisa}
+                onChangeText={setPesquisa}
+                style={styles.input}
+            />
+            <Text style={styles.title}>Seja Bem-vindo ao App da Barbie! ✨</Text>
+
+            {pesquisa !== '' ? (
+                <FlatList
+                    data={resultados}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={styles.item}
+                            onPress={() => {
+                                if (!item.titulo) {
+                                    console.warn('Título não definido para o item:', item);
+                                    return;
+                                }
+                                navigation.navigate('Details', {
+                                    titulo: item.titulo,
+                                });
+
+                            }}
+                        >
+                            <Text style={styles.textoItem}>{item.titulo}</Text>
+                        </TouchableOpacity>
+                    )}
+                    contentContainerStyle={styles.listContainer}
+
                 />
-                <Text style={styles.title}>Seja Bem-vindo ao App da Barbie</Text>
-                {pesquisa !== '' ? (
-                    <FlatList
-                        data={resultados}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity
-                                style={styles.item}
-                                onPress={() => navigation.navigate('Details', { titulo: item.titulo })}
-                            >
-                                <Text style={styles.textoItem}>{item.titulo}</Text>
-                            </TouchableOpacity>
-                        )}
-                    />
-                ) : null}
-            </View>
-        </ScrollView>
+            ) : null}
+        </View>
+
     );
 }
 
@@ -56,6 +67,7 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
         backgroundColor: 'rgba(247, 167, 243, 0.5)',
+
     },
     container: {
         flex: 1,
@@ -65,18 +77,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(247, 167, 243, 0.5)'
     },
     title: {
-        fontSize: 22,
-        marginTop: 20,
+        fontSize: 12,
+        marginTop: 165,
         color: 'rgba(58, 7, 56, 0.66)',
         fontWeight: '600',
         textAlign: 'center',
         fontFamily: 'Poppins-Regular'
     },
     logo: {
-        width: 100,
-        height: 100,
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        width: 80,
+        height: 80,
         resizeMode: 'contain',
-        marginBottom: 10,
+        zIndex: 1,
     },
     estiloBotao: {
         backgroundColor: 'rgba(175, 79, 170, 0.7)',
@@ -97,11 +112,13 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: 'rgba(175, 79, 170, 0.2)',
         padding: 15,
-        marginBottom: 10,
+        marginVertical: 8,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#70376D',
-        width: '100%',
+        width: windowWidth * 0.9,
+        marginTop: 1,
+
     },
     textoItem: {
         fontSize: 16,
@@ -110,15 +127,19 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular'
     },
     input: {
+        position: 'absolute',
         borderWidth: 1,
         borderColor: 'rgba(112, 39, 109, 0.5)',
         backgroundColor: 'rgba(247, 167, 243, 0.14)',
         borderRadius: 8,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         color: '#70376D',
-        height: 40,
-        width: '100%',
-        maxWidth: 360,
+        height: 45,
+        width: '60%',
+        marginBottom: 35,
+        marginTop: 40,
+        marginLeft: 105,
+        paddingLeft: 12,
     },
 
 });

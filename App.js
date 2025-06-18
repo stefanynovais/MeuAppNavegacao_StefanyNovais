@@ -3,7 +3,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Alert } from 'react-native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 
 import LoginScreen from './src/LoginScreen';
 import HomeScreen from './src/HomeScreen';
@@ -67,10 +67,13 @@ export default function App() {
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="Details" component={DetailsScreen}></Stack.Screen>
+                <Stack.Screen name="Details" component={DetailsScreen} options={({ route }) => ({
+                    title: route.params?.titulo || 'Detalhes',
+                    headerBackTitle: 'Voltar'
+                })}></Stack.Screen>
                 <Stack.Screen name="Profile" component={ProfileScreen}></Stack.Screen>
                 <Stack.Screen name="RecuperarSenha" component={RecuperarSenhaScreen} options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="MainApp" component={AppDrawer} />
+                <Stack.Screen name="MainApp" component={AppDrawer} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

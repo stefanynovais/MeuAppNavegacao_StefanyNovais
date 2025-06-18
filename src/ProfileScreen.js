@@ -7,17 +7,7 @@ export default function ProfileScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <Image source={require('../assets/childhood.png')} style={styles.logo} />
-            <Text style={styles.title}>Profile Screen</Text>
-            <View>
-                <TouchableOpacity style={styles.estiloBotao} onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.textoBotao}>Go to Home</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity style={styles.estiloBotao} onPress={() => navigation.navigate('Details')}>
-                    <Text style={styles.textoBotao}>Go to Details</Text>
-                </TouchableOpacity>
-            </View>
+            <Text style={styles.title}>Aqui está seu perfil da Barbie✨</Text>
         </View>
     );
 }
@@ -38,7 +28,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     title: {
-        fontSize: 24,
+        fontSize: 14,
         marginBottom: 20,
         color: 'rgba(58, 7, 56, 0.66)'
     },

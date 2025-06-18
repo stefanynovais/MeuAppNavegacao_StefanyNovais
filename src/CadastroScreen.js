@@ -58,7 +58,7 @@ export default function CadastroScreen({ navigation }) {
                     </TouchableOpacity>
                 )}
             </View>
-            
+
             <TouchableOpacity style={styles.estiloBotao} onPress={handleCadastro}>
                 <Text style={styles.textoBotao}>Cadastrar</Text>
             </TouchableOpacity>

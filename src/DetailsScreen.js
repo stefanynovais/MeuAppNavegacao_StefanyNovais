@@ -1,60 +1,62 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, Dimensions, Image, TouchableOpacity, ScrollView } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function DetailsScreen({ navigation, route }) {
-const { titulo } = route.params;
+const { params = {} } = route || {};
+const { titulo = 'Título não disponível' } = params;
+
 
     return (
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
               <Text style={styles.titulo}>{titulo}</Text>
             <Image source={require('../assets/childhood.png')} style={styles.logo} />
               <Text style={styles.texto}>
         Aqui estão os detalhes incríveis sobre "{titulo}" no mundo encantado da Barbie! ✨
       </Text>
-            
-                <TouchableOpacity style={styles.estiloBotao} onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.textoBotao}>Go to Home</Text>
-                </TouchableOpacity>
-         
           
                 <TouchableOpacity style={styles.estiloBotao} onPress={() => navigation.navigate('Profile')}>
                     <Text style={styles.textoBotao}>Go to Profile</Text>
                 </TouchableOpacity>
            
         </View>
+           </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+   scrollContainer: {
+        flexGrow: 1,
+    },
     container: {
-      flex: 1,
-    backgroundColor: 'rgba(247, 167, 243, 0.5)',
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+       flex: 1,
+        backgroundColor: 'rgba(247, 167, 243, 0.5)',
+        padding: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     titulo: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#70376D',
-    marginBottom: 10,
-    fontFamily: 'Poppins-Regular',
-    textAlign: 'center',
+    fontSize: 24,
+        fontWeight: 'bold',
+        color: '#70376D',
+        marginVertical: 20,
+        fontFamily: 'Poppins-Regular',
+        textAlign: 'center',
   },
     logo: {
-       width: 200,
-    height: 200,
-    resizeMode: 'contain',
+       width: Math.min(windowWidth * 0.8, 200),
+    height: Math.min(windowWidth * 0.8, 200),
     marginVertical: 20,
     },
-      texto: {
-    fontSize: 16,
-    color: '#70376D',
-    fontFamily: 'Poppins-Regular',
-    textAlign: 'center',
-    marginBottom: 30,
+    texto: {
+     fontSize: 18,
+        color: '#70376D',
+        fontFamily: 'Poppins-Regular',
+        textAlign: 'center',
+        marginBottom: 40,
+        lineHeight: 24,
   },
     title: {
         fontSize: 24,

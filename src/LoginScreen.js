@@ -12,17 +12,17 @@ export default function LoginScreen({ navigation }) {
     const [senhaVisivel, setSenhaVisivel] = useState(false);
     const [loading, setLoading] = useState(false); //loading do botão começa com falso, assim como a senha foco e a senha visivel
 
-//função chamada ao clicar em "entrar"
+    //função chamada ao clicar em "entrar"
     const handleLogin = async () => {
         //verificando se o usuário preencheu o dados
-         if (!login || !senha) {
-      Alert.alert('Erro', 'Por favor, preencha login e senha.');
-      return;
-    }
-    setLoading(true); // começa o loading
+        if (!login || !senha) {
+            Alert.alert('Erro', 'Por favor, preencha login e senha.');
+            return;
+        }
+        setLoading(true); // começa o loading
         try {
             const savedLogin = await AsyncStorage.getItem('userLogin'); //o await diz como: "faça isso aqui antes de continuar"
-            
+
             //os gets são para buscar o login e senhas salvos
             const savedSenha = await AsyncStorage.getItem('userSenha');
 
@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
         } catch (error) {
             Alert.alert('Erro', 'Falha ao acessar os dados de login!'); //alerta de falha ao tentar verificar os dados
         }
-         setLoading(false); //loading pode parar
+        setLoading(false); //loading pode parar
     };
     return (
 
@@ -67,14 +67,14 @@ export default function LoginScreen({ navigation }) {
                     >
                         <Icon name={senhaVisivel ? "eye-off" : "eye"} size={20} color="#70376D" /> {/*Aqui é como se fosse uma forma mais curta para se escrever um if/else. O ? testa uma condição e decide qual valor retornar. */}
                     </TouchableOpacity>
-                )}                         
+                )}
             </View>
-            
-                 {senhaFoco && (
-        <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}>
-          <Text style={styles.recuperarSenha}>Esqueceu a senha?</Text>
-        </TouchableOpacity>
-      )}
+
+            {senhaFoco && (
+                <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}>
+                    <Text style={styles.recuperarSenha}>Esqueceu a senha?</Text>
+                </TouchableOpacity>
+            )}
 
             {/*Optei por usar esse touchable opacity porque ele é menos limitado que um "button", para ser utilizado*/}
             <TouchableOpacity style={styles.estiloBotao} onPress={handleLogin} disabled={loading} >
@@ -173,13 +173,13 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
     },
     recuperarSenha: {
-    textAlign: 'right',
-    color: 'blue',
-    marginTop: 5,
-    marginBottom: 15,
-    marginRight: 5,
-    textDecorationLine: 'underline',
-    fontSize: 13,
-    fontStyle: 'italic',
-  },
+        textAlign: 'right',
+        color: 'blue',
+        marginTop: 5,
+        marginBottom: 15,
+        marginRight: 5,
+        textDecorationLine: 'underline',
+        fontSize: 13,
+        fontStyle: 'italic',
+    },
 });
