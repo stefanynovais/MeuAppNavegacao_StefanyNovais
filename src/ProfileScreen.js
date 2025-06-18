@@ -18,12 +18,6 @@ export default function ProfileScreen({ navigation }) {
                     <Text style={styles.textoBotao}>Go to Details</Text>
                 </TouchableOpacity>
             </View>
-            <View>
-                <TouchableOpacity style={styles.estiloBotaoLogOut} onPress={() => navigation.replace('Login')}>
-                    <Text style={styles.textoBotaoLogOut}>Log Out</Text>
-                </TouchableOpacity>
-
-            </View>
         </View>
     );
 }

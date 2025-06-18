@@ -8,25 +8,33 @@ export default function LoginScreen({ navigation }) {
     //estados atuais 
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
-    const [senhaFoco, setSenhaFoco] = useState('');
+    const [senhaFoco, setSenhaFoco] = useState(false);
     const [senhaVisivel, setSenhaVisivel] = useState(false);
+    const [loading, setLoading] = useState(false); //loading do botão começa com falso, assim como a senha foco e a senha visivel
 
 //função chamada ao clicar em "entrar"
     const handleLogin = async () => {
+        //verificando se o usuário preencheu o dados
+         if (!login || !senha) {
+      Alert.alert('Erro', 'Por favor, preencha login e senha.');
+      return;
+    }
+    setLoading(true); // começa o loading
         try {
             const savedLogin = await AsyncStorage.getItem('userLogin'); //o await diz como: "faça isso aqui antes de continuar"
             
             //os gets são para buscar o login e senhas salvos
             const savedSenha = await AsyncStorage.getItem('userSenha');
 
-            if (login === savedLogin && senha === savedSenha) { //comparando ao que foi digitado pelo usuário, se estiver igual, redireciona à tela de homescreen
-                navigation.replace('Home');
+            if (login === savedLogin && senha === savedSenha) { //comparando ao que foi digitado pelo usuário, se estiver igual, redireciona ao drawer
+                navigation.replace('MainApp');
             } else {
                 Alert.alert('Erro', 'Login ou senha incorretos!'); //se não estiver igual, retorna esse alert de erro
             }
         } catch (error) {
             Alert.alert('Erro', 'Falha ao acessar os dados de login!'); //alerta de falha ao tentar verificar os dados
         }
+         setLoading(false); //loading pode parar
     };
     return (
 
@@ -69,8 +77,8 @@ export default function LoginScreen({ navigation }) {
       )}
 
             {/*Optei por usar esse touchable opacity porque ele é menos limitado que um "button", para ser utilizado*/}
-            <TouchableOpacity style={styles.estiloBotao} onPress={handleLogin}>
-                <Text style={styles.textoBotao}>Entrar</Text>
+            <TouchableOpacity style={styles.estiloBotao} onPress={handleLogin} disabled={loading} >
+                <Text style={styles.textoBotao}>{loading ? 'Entrando...' : 'Entrar'}</Text>
             </TouchableOpacity>
 
             {/*Link para ir até a tela de cadastro, caso o usuário não tenha um*/}

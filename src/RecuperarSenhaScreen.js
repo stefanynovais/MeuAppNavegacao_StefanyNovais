@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function LoginScreen({ navigation }) {
+export default function RecuperarSenhaScreen({ navigation }) {
 
     const [novaSenha, setNovaSenha] = useState(''); //estado local para armazenar a nova senha digitada
+    const [senhaFoco, setSenhaFoco] = useState(false);
+    const [senhaVisivel, setSenhaVisivel] = useState(false);
 
 
 
     const handlesalvarNovaSenha = async () => { //função que salva a nova senha no assync storage
-        if (!novaSenha.trim()){
+        if (!novaSenha.trim()){ //verificando se o campo está vazio
             Alert.alert('Erro', 'Digite uma nova senha.');
             return;
         }
@@ -32,6 +35,7 @@ export default function LoginScreen({ navigation }) {
             <Image source={require('../assets/childhood.png')} style={styles.logo} />
 
             <Text style={styles.welcome}>Recuperar Senha</Text>
+              <View style={styles.inputContainer}>
             <TextInput
                 placeholder="Digite a nova senha"
                 value={novaSenha}
@@ -39,9 +43,19 @@ export default function LoginScreen({ navigation }) {
                 secureTextEntry //ocultar a senha, deixar com aquelas bolinhas pretas
                 style={styles.input}
                 placeholderTextColor="rgba(58, 7, 56, 0.6)"
+                onFocus={() => setSenhaFoco(true)} //o campo em foque significa que o usuário está com o input aberto
+                onBlur={() => setSenhaFoco(false)} //o blur indica que o usuário saiu do campo 
             />
-
-            <TouchableOpacity onPress={() => ('handleSalvarNovaSenha')}>
+              {(senhaFoco || senha.length > 0) && ( // o length pega o número de caracteres que uma string tem. Sendo assim, se length for maior que 0, o usuário já digitou alguma caracter, logo já pode aparecer o olhinho.
+                                <TouchableOpacity
+                                    style={styles.iconeOlho}
+                                    onPress={() => setSenhaVisivel(!senhaVisivel)} //alterna a visibilidade da senha, como se fosse um boolean
+                                >
+                                    <Icon name={senhaVisivel ? "eye-off" : "eye"} size={20} color="#70376D" /> {/*Aqui é como se fosse uma forma mais curta para se escrever um if/else. O ? testa uma condição e decide qual valor retornar. */}
+                                </TouchableOpacity>
+                            )}  
+                            </View>   
+            <TouchableOpacity style={styles.botao} onPress={handlesalvarNovaSenha}>
                 <Text style={styles.textoBotao}>Salvar</Text>
             </TouchableOpacity>
 
@@ -84,6 +98,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20
   },
+  inputContainer: {
+        position: 'relative',
+        marginBottom: 20,
+    },
+    inputComIcone: {
+        height: 40,
+        borderWidth: 1,
+        padding: 8,
+        paddingLeft: 8,
+        paddingRight: 35,
+        borderRadius: 5,
+        backgroundColor: 'rgba(247, 167, 243, 0.14)',
+        borderColor: 'rgba(112, 39, 109, 0.5)',
+    },
+
+    iconeOlho: {
+        position: 'absolute',
+        right: 10,
+        top: 10,
+    },
   botao: {
     backgroundColor: 'rgba(175, 79, 170, 0.7)',
     padding: 12,

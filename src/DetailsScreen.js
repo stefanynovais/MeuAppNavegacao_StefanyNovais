@@ -3,40 +3,59 @@ import { View, Text, Button, StyleSheet, Dimensions, Image, TouchableOpacity } f
 
 const windowWidth = Dimensions.get('window').width;
 
-export default function DetailsScreen({ navigation }) {
+export default function DetailsScreen({ navigation, route }) {
+const { titulo } = route.params;
+
     return (
         <View style={styles.container}>
+              <Text style={styles.titulo}>{titulo}</Text>
             <Image source={require('../assets/childhood.png')} style={styles.logo} />
-            <Text style={styles.title}>Details Screen</Text>
-            <View>
+              <Text style={styles.texto}>
+        Aqui estão os detalhes incríveis sobre "{titulo}" no mundo encantado da Barbie! ✨
+      </Text>
+            
                 <TouchableOpacity style={styles.estiloBotao} onPress={() => navigation.navigate('Home')}>
                     <Text style={styles.textoBotao}>Go to Home</Text>
                 </TouchableOpacity>
-            </View>
-            <View>
+         
+          
                 <TouchableOpacity style={styles.estiloBotao} onPress={() => navigation.navigate('Profile')}>
                     <Text style={styles.textoBotao}>Go to Profile</Text>
                 </TouchableOpacity>
-            </View>
+           
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(247, 167, 243, 0.5)'
+      flex: 1,
+    backgroundColor: 'rgba(247, 167, 243, 0.5)',
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     },
+    titulo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#70376D',
+    marginBottom: 10,
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
+  },
     logo: {
-        position: 'absolute',
-        top: 40,
-        left: 140,
-        width: 90,
-        height: 90,
-        resizeMode: 'contain'
+       width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginVertical: 20,
     },
+      texto: {
+    fontSize: 16,
+    color: '#70376D',
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
     title: {
         fontSize: 24,
         marginBottom: 20,
@@ -45,7 +64,6 @@ const styles = StyleSheet.create({
     estiloBotao: {
         backgroundColor: 'rgba(175, 79, 170, 0.7)',
         padding: 12,
-        borderRadius: 8,
         alignItems: 'center',
         marginTop: 10,
         borderRadius: 5,
